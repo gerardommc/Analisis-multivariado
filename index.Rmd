@@ -12,6 +12,25 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Contenidos parciales de [Análisis multivariado](Programa.pdf)
+
 1.  [Encuadre](Encuadre.pdf)
     
     - [Programa del curso](Programa-Intro-Estad.pdf)
+
+2. Diseño de experimentos
+
+    - [Relación entre el diseño y al análisis](Relacion-diseno-analisis.pdf)
+    - [Construcción de un diagrama de flujo](Construccion-diagrama.pdf)
+    - [Identificación de supuestos y limitantes](Id-supuestos-limitantes.pdf)
+    - [Valoración de ajuste](Valoracion-ajuste.pdf)
+
+3. Introducción a las bases de datos
+
+    - [Organización](Organizacion-bases-datos.pdf)
+    - [Relación entre bases de datos](Relacion-bases.pdf)
+
+4. Análisis exploratorio de datos multidimensionales
+
+    - [Examen gráfico](Examen-grafico.pdf)
+    - [Datos faltantes y atípicos](Ausentes-atipicos.pdf)
