@@ -12,15 +12,15 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Contenidos parciales de [Análisis multivariado](Programa.pdf)
+Contenidos parciales de Análisis multivariado
 
 1.  [Encuadre](Encuadre.pdf)
     
-    - [Programa del curso](Programa-Intro-Estad.pdf)
+    - [Programa del curso](Programa.pdf)
 
 2. Diseño de experimentos
 
-    - [Relación entre el diseño y al análisis](Relacion-diseno-analisis.pdf)
+    - [Relación entre el diseño y el análisis](Relacion-diseno-analisis.pdf)
     - [Construcción de un diagrama de flujo](Construccion-diagrama.pdf)
     - [Identificación de supuestos y limitantes](Id-supuestos-limitantes.pdf)
     - [Valoración de ajuste](Valoracion-ajuste.pdf)
