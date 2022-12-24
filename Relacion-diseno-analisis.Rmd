@@ -226,3 +226,63 @@ Variables discretas, sin decimales, p. ej. conteos poblacionales
     - Modelos lineales generalizados
         - Poisson
         - Logística, binomial (también para binarias, 1, 0)
+        
+# Factores de agrupamiento
+
+### Bloques
+
+![](Figuras-disenos/Rejilla-bloques.png)
+
+### Bloques
+
+- Tratamientos experimentales (Color de las bolitas)
+
+- Agrupamiento: bloques (Cajas de color gris)
+
+- Implicaciones para análisis:
+
+    - Tratamientos: efectos fijos
+            - Factores cuyo efecto sobre objeto de estudio deseamos medir
+    
+    - Bloques: efectos aleatorios
+            - Factores no medidos, desconocidos que aumentan variabilidad
+            
+### Ejemplo del efecto de los bloques
+
+```{r echo = F, fig.height = 4, fig.width=4.5, fig.align='center'}
+set.seed(154)
+
+x.b1 <- c(rnorm(10, mean = 5, sd = 1),
+          rnorm(10, mean = 6, sd = 0.15),
+          rnorm(10, mean = 5.1, sd = 0.7))
+
+x.b2 <- c(rnorm(10, mean = 4, sd = 1.5),
+          rnorm(10, mean = 4.7, sd = 0.5),
+          rnorm(10, mean = 4.5, sd = 1))
+
+bloque <- rep(c(1, 2), each = 30)
+
+tratamiento <- c(rep(c(1, 2, 3), each = 10),
+                 rep(c(1, 2, 3), each = 10))
+
+base <- data.frame(Valor = c(x.b1, x.b2),
+                   Bloque = as.factor(bloque),
+                   Tratamiento = as.factor(tratamiento))
+
+library(ggplot2)
+
+ggplot(base) + geom_boxplot(aes(x = Tratamiento, y = Valor, fill = Tratamiento))
+```
+
+### Ejemplo del efecto de los bloques
+
+```{r echo = F, fig.height=4.5, fig.width=8}
+ggplot(base) + geom_boxplot(aes(x = Tratamiento, y = Valor, fill = Tratamiento))+
+    facet_wrap(~Bloque)
+```
+
+### Efecto de bloques y tratamientos
+
+- Bloques afectan dispersión (varianza)
+
+- Tratamientos afectan promedio

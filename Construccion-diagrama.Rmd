@@ -1,0 +1,54 @@
+---
+title: "Construcción de un diagrama de flujo"
+author: "Gerardo Martín"
+fontsize: 11pt
+output:
+  beamer_presentation:
+    theme: metropolis
+    highlight: pygments
+    slide_level: 3
+    fig_height: 4.5
+    fig_caption: true
+    latex_engine: xelatex
+    keep_tex: true
+date: '2022-06-29'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(dev = 'pdf')
+```
+
+### Razones
+
+- Identificar necesidades
+
+    - Materiales
+    - Espacio físico
+    - Fechas de inicio
+    - Fechas de toma de muestra
+    - Fechas de fin
+    - Identificación de estrategia de análisis
+    - Estructuración de base de datos
+    
+### Técnicas
+
+1. Determinar objetivo, hipótesis o pregunta de investigación
+2. Identificar factores que se pueden manipular
+3. Identificar maneras de manipular factores experimentalmente ó geográficamente (estudios observacionales)
+4. Determinar necesidades de espacio
+5. Hacer lista de materiales
+6. Hacer diagrama de diseño
+
+# Ejemplo
+
+### El experimento
+
+[Influencia de tres regímenes de riego](https://www.scielo.org.mx/scielo.php?script=sci_arttext&pid=S0187-57792022000100110&lang=es)
+
+[Diagrama de flujo](Figuras-disenos/diagrama.odg)
+
+# El proyecto de análisis
+
+### ¿Qué variable(s) de respuesta habrá?
+
+### ¿Qué variable(s) independientes habrá?
