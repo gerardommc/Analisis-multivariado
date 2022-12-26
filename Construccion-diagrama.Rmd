@@ -51,4 +51,48 @@ knitr::opts_chunk$set(dev = 'pdf')
 
 ### ¿Qué variable(s) de respuesta habrá?
 
+En cosecha:
+1. Altura de la planta
+2. Número de espigas
+
+Depués de cosecha:
+1. Tamaño de espiga
+2. Número de granos en la espiga
+3. Color de los granos
+4. Peso de 1000 granos
+5. Rendimiento
+6. Cantidad de proteína y ceniza
+
 ### ¿Qué variable(s) independientes habrá?
+
+1. Tres regímenes de humedad del suelo, con valores:
+
+    - Lámina de riego de 39.3 cm
+    - Control con lámina de 42.5 cm
+    - Lámina de riego de 44.8 cm
+    
+### Modelo de análisis
+
+Comparación de medias:
+
+1. ANOVA ó ANODE
+2. Regresión lineal
+
+Ejemplo NOVA:
+
+$$ Peso(Regímen) =  \alpha + \beta_{Regímen} $$
+
+- $\alpha =$ Promedio global de $Peso$
+- $\beta_{Regímen} =$ Diferencia entre $\alpha$ y peso promedio de cada tratamiento
+
+### Modelo de análisis
+
+Ejemplo de regresión lineal:
+
+$$ Peso(Lámina) = \alpha + \beta \times Lámina $$
+
+- $\alpha =$ Intercepto, valor de $Peso$ cuando $Lámina = 0$
+- $\beta =$ Pendiente, cuańto cambia el peso cuando $Lámina$ aumenta en 1 unidad
+
+### Análisis multivariado
+

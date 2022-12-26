@@ -160,10 +160,75 @@ de tres regímenes de riego}
 
 \begin{frame}{¿Qué variable(s) de respuesta habrá?}
 \protect\hypertarget{quuxe9-variables-de-respuesta-habruxe1}{}
+En cosecha: 1. Altura de la planta 2. Número de espigas
+
+Depués de cosecha: 1. Tamaño de espiga 2. Número de granos en la espiga
+3. Color de los granos 4. Peso de 1000 granos 5. Rendimiento 6. Cantidad
+de proteína y ceniza
 \end{frame}
 
 \begin{frame}{¿Qué variable(s) independientes habrá?}
 \protect\hypertarget{quuxe9-variables-independientes-habruxe1}{}
+\begin{enumerate}
+\item
+  Tres regímenes de humedad del suelo, con valores:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Lámina de riego de 39.3 cm
+  \item
+    Control con lámina de 42.5 cm
+  \item
+    Lámina de riego de 44.8 cm
+  \end{itemize}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Modelo de análisis}
+\protect\hypertarget{modelo-de-anuxe1lisis}{}
+Comparación de medias:
+
+\begin{enumerate}
+\tightlist
+\item
+  ANOVA ó ANODE
+\item
+  Regresión lineal
+\end{enumerate}
+
+Ejemplo NOVA:
+
+\[ Peso(Regímen) =  \alpha + \beta_{Regímen} \]
+
+\begin{itemize}
+\tightlist
+\item
+  \(\alpha =\) Promedio global de \(Peso\)
+\item
+  \(\beta_{Regímen} =\) Diferencia entre \(\alpha\) y peso promedio de
+  cada tratamiento
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Modelo de análisis}
+\protect\hypertarget{modelo-de-anuxe1lisis-1}{}
+Ejemplo de regresión lineal:
+
+\[ Peso(Lámina) = \alpha + \beta \times Lámina \]
+
+\begin{itemize}
+\tightlist
+\item
+  \(\alpha =\) Intercepto, valor de \(Peso\) cuando \(Lámina = 0\)
+\item
+  \(\beta =\) Pendiente, cuańto cambia el peso cuando \(Lámina\) aumenta
+  en 1 unidad
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Análisis multivariado}
+\protect\hypertarget{anuxe1lisis-multivariado}{}
 \end{frame}
 
 \end{document}
