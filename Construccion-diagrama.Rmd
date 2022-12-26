@@ -52,10 +52,12 @@ knitr::opts_chunk$set(dev = 'pdf')
 ### ¿Qué variable(s) de respuesta habrá?
 
 En cosecha:
+
 1. Altura de la planta
 2. Número de espigas
 
 Depués de cosecha:
+
 1. Tamaño de espiga
 2. Número de granos en la espiga
 3. Color de los granos
@@ -80,7 +82,7 @@ Comparación de medias:
 
 Ejemplo NOVA:
 
-$$ Peso(Regímen) =  \alpha + \beta_{Regímen} $$
+$$ Peso(Regimen) =  \alpha + \beta_{Regimen} $$
 
 - $\alpha =$ Promedio global de $Peso$
 - $\beta_{Regímen} =$ Diferencia entre $\alpha$ y peso promedio de cada tratamiento
@@ -89,10 +91,10 @@ $$ Peso(Regímen) =  \alpha + \beta_{Regímen} $$
 
 Ejemplo de regresión lineal:
 
-$$ Peso(Lámina) = \alpha + \beta \times Lámina $$
+$$ Peso(Lamina) = \alpha + \beta \times Lamina $$
 
-- $\alpha =$ Intercepto, valor de $Peso$ cuando $Lámina = 0$
-- $\beta =$ Pendiente, cuańto cambia el peso cuando $Lámina$ aumenta en 1 unidad
+- $\alpha =$ Intercepto, valor de $Peso$ cuando $Lamina = 0$
+- $\beta =$ Pendiente, cuańto cambia el peso cuando $Lamina$ aumenta en 1 unidad
 
 ### Análisis multivariado
 
