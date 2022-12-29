@@ -22,10 +22,8 @@ Contenidos parciales de Análisis multivariado
 
     - [Relación entre el diseño y el análisis](Relacion-diseno-analisis.pdf)
     - [Construcción de un diagrama de flujo](Construccion-diagrama.pdf)
-    - [Identificación de supuestos y limitantes](Id-supuestos-limitantes.pdf)
-    - [Valoración de ajuste](Valoracion-ajuste.pdf)
 
-3. Introducción a las bases de datos
+3. [Introducción a las bases de datos](Bases-de-datos.html)
 
     - [Organización](Organizacion-bases-datos.pdf)
     - [Relación entre bases de datos](Relacion-bases.pdf)

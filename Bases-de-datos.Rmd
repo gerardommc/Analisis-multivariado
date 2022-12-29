@@ -1,0 +1,63 @@
+---
+title: "Bases de datos"
+author: "Gerardo Martín"
+date: "10/2/2021"
+output: 
+      bookdown::html_document2:
+            toc: true 
+            number_sections: true
+            toc_float: true
+            theme: flatly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Las bases de datos son el conjunto de observaciones que hacemos del mundo de una manera organizada y sistemática. El arreglo más tradicional de las bases de datos son tablas, donde las filas corresponden a descripciones de las unidades de observación, por medio de mediciones de diferentes aspectos. Las filas, en cambio son las descripciones. Por ejemplo:
+
+```{r echo = F}
+set.seed(10)
+MEANS <- c(5,10,20,10,5)
+SIGMA <- matrix(c(1,0.9,0.0,0.0,0.0,
+                  0.9,1.0,0.0,0.0,0.0,
+                  0.0,0.0,1,0.8,-0.8,
+                  0.0,0.0,0.8,1,-0.9,
+                  0.0,0.0,-0.8,-0.9,1.0),
+              5,5)
+
+library(mvtnorm)
+x <- rmvnorm(n=100, mean=MEANS, sigma=SIGMA)
+x <- round(x,0)
+data <- data.frame(Sp1=x[,1],Sp2=x[,2],Sp3=x[,3],Sp4=x[,4],Sp5=x[,5])
+
+write.csv(data, "Datos-bases/Datos-sp.csv")
+
+knitr::kable(data[1:10,], caption = "Base de datos de abundancia de cinco especies en 100 sitios (sólo se muestran los primeros diez).")
+```
+
+Esta base de datos se encuentra en formato ancho. Es común modificar el formato de las bases dependiendo del tipo de análisis que vayamos a hacer. Para los análisis univariados, es más común utiizar el formato largo. Para hacer la transformación, a esta base de datos, debemos añadirle una columna que nos permita identificar los sitios:
+
+```{r echo = F}
+data$Sitio <- paste0("sitio.", 1:100)
+knitr::kable(data[1:10,], caption = "Base de datos con identificador de sitio")
+```
+
+En R, podemos trasformar fácilmente una base de datos de formato ancho a largo con la función `melt`. El resultado de la transformación de ancho a largo es:
+
+```{r echo = F}
+data.m <- reshape2::melt(data, id.vars = "Sitio")
+knitr::kable(data.m[1:20,], caption = "Base de datos transformada de ancho a largo. Ahora, la identidad de la especie es una columna más, y las filas corresponden a la abundancia de cada especie en cada sitio.")
+```
+
+Esta base de datos fue generada con el código de [Murray Logan](http://www.flutterbys.com.au/stats/tut/tut13.1.html).
+
+A continuación veremos cómo leer y modificar bases de datos en R.
+
+# Tutorial de bases de datos en **R**
+
+
+
+[Código fuente de este tutorial](Base-de-datos.Rmd)
+
+[Regresar al índice del curso](../index.html)

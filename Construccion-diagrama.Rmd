@@ -96,5 +96,15 @@ $$ Peso(Lamina) = \alpha + \beta \times Lamina $$
 - $\alpha =$ Intercepto, valor de $Peso$ cuando $Lamina = 0$
 - $\beta =$ Pendiente, cuańto cambia el peso cuando $Lamina$ aumenta en 1 unidad
 
-### Análisis multivariado
+### El análisis multivariado
 
+- Los análisis anteriores son univariados
+
+    - Sólo hay una variable de repuesta
+
+- ¿Qué hacemos si hay dos ó más variables, como
+
+    - Tamaño de espiga, Número de granos, peso de 1000 granos, etc.?
+    - Analizar la relación entre todas las variables de respuesta con estadística multivariada.
+    - Por ejemplo, ¿hay patrones que corresponden con cada uno de los tratamientos?
+    - Comenzaremos por visualizar los datos y después hacer el análisis multivariado
