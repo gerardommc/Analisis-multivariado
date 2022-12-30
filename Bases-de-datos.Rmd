@@ -31,7 +31,7 @@ x <- rmvnorm(n=100, mean=MEANS, sigma=SIGMA)
 x <- round(x,0)
 data <- data.frame(Sp1=x[,1],Sp2=x[,2],Sp3=x[,3],Sp4=x[,4],Sp5=x[,5])
 
-write.csv(data, "Datos-bases/Datos-sp.csv")
+write.csv(data, "Datos-bases/Datos-sp.csv", row.names = F)
 
 knitr::kable(data[1:10,], caption = "Base de datos de abundancia de cinco especies en 100 sitios (sólo se muestran los primeros diez).")
 ```
@@ -56,7 +56,44 @@ A continuación veremos cómo leer y modificar bases de datos en R.
 
 # Tutorial de bases de datos en **R**
 
+El formato de elección para almacenar datos y utilizarlos en R es `csv`, que quiere decir *comma separated value*, y es un archivo de text normal, donde las columnas están separadas por comas y las filas con un *intro*. Estos archivos podemos crearlos desde R ó Excel al capturar los datos experimentales.
 
+Para leer bases de datos en formato `csv` desde R utilizaremos la función `read.csv`. Así por ejemplo, para leer la base de datos de las abundancias de especies de esta parte introductoria sería:
+
+```{r}
+base.sp <- read.csv("Datos-bases/Datos-sp.csv")
+```
+
+El único argumento que necesitamos para utilizarla es la ubicación o ruta hacia el archivo, en este caso la carpeta `"Datos-bases"` seguido de una diagonal y el nombre del archivo `csv`. Para obtener esta base de datos [haz click aquí](Datos-bases/Datos-sp.csv). Nota que al ejecutar esta línea de código en R, se crea un objeto en el espacio de trabajo (pestaña *Environment* en Rstudio). Siempre que querramos trabajar con un objeto, este debe existir en el ambiente de trabajo de R.
+
+Ahora, estamos en posibilidades de acceder a los datos que contiene la base. Para acceder a los contenidos de una de las columnas debemos identificar sus nombres con la función `names`:
+
+```{r}
+names(base.sp)
+```
+
+Entonces, para acceder a la abundancia de `Sp1` en cada uno de los 100 sitios de muestreo, podemos utilizar el operador `$` seguido del nombre de la columna que queremos inspeccionar:
+
+```{r}
+base.sp$Sp1
+```
+
+Igualmente podríamos revisar cuál es la abundancia de las cinco especies en un sitio específico, aunque en este caso, debemos utilizar paréntesis cuadrados para indicar qué fila queremos revisar:
+
+```{r}
+base.sp[10, ]
+```
+
+Debido a que `base.sp` es una arreglo bidimensional, debemos incluir una coma intermedia, el valor antes de la coma indica el número de fila, y el valor después de la coma indica el número de columna. De este modo, hemos indicado a R que imprima la fila 10.
+
+Como se menciona al incio de esta sección, esta base de datos está en formato ancho, yu es común requerir de una base en formato largo. Para esta transformación necesitamos importar la función `melt`, que está contenida en el paquete `reshape2`. Al procesar el objeto `base.sp` crearemos otro objeto que contendrá los mismos datos que `base.sp` pero en formato largo, no sin antes crear una columna adicional que identifica los sitios de muestreo:
+
+```{r}
+base.sp$Sitio <- paste0("sitio.", 1:100)
+base.sp.m <- reshape2::melt(base.sp, id.vars = "Sitio")
+```
+
+En la función `melt` el primer argumento es la base en formato ancho que queremos transformar, y el segundo argumento `id.vars` indica la columna que se utilizará para identificar las unidades de muestreo. Existen otras posibilidades para formatos largos que veremos más tarde.
 
 [Código fuente de este tutorial](Base-de-datos.Rmd)
 

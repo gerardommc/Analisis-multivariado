@@ -25,8 +25,7 @@ Contenidos parciales de Análisis multivariado
 
 3. [Introducción a las bases de datos](Bases-de-datos.html)
 
-    - [Organización](Organizacion-bases-datos.pdf)
-    - [Relación entre bases de datos](Relacion-bases.pdf)
+    - [Procesamiento de bases de datos](Procesamiento-datos.html)
 
 4. Análisis exploratorio de datos multidimensionales
 

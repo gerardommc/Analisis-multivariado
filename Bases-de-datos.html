@@ -1800,6 +1800,27 @@ border-radius: 0px;
 <p>A continuación veremos cómo leer y modificar bases de datos en R.</p>
 <div id="tutorial-de-bases-de-datos-en-r" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Tutorial de bases de datos en <strong>R</strong></h1>
+<p>El formato de elección para almacenar datos y utilizarlos en R es <code>csv</code>, que quiere decir <em>comma separated value</em>, y es un archivo de text normal, donde las columnas están separadas por comas y las filas con un <em>intro</em>. Estos archivos podemos crearlos desde R ó Excel al capturar los datos experimentales.</p>
+<p>Para leer bases de datos en formato <code>csv</code> desde R utilizaremos la función <code>read.csv</code>. Así por ejemplo, para leer la base de datos de las abundancias de especies de esta parte introductoria sería:</p>
+<pre class="r"><code>base.sp &lt;- read.csv(&quot;Datos-bases/Datos-sp.csv&quot;)</code></pre>
+<p>El único argumento que necesitamos para utilizarla es la ubicación o ruta hacia el archivo, en este caso la carpeta <code>&quot;Datos-bases&quot;</code> seguido de una diagonal y el nombre del archivo <code>csv</code>. Para obtener esta base de datos <a href="Datos-bases/Datos-sp.csv">haz click aquí</a>. Nota que al ejecutar esta línea de código en R, se crea un objeto en el espacio de trabajo (pestaña <em>Environment</em> en Rstudio). Siempre que querramos trabajar con un objeto, este debe existir en el ambiente de trabajo de R.</p>
+<p>Ahora, estamos en posibilidades de acceder a los datos que contiene la base. Para acceder a los contenidos de una de las columnas debemos identificar sus nombres con la función <code>names</code>:</p>
+<pre class="r"><code>names(base.sp)</code></pre>
+<pre><code>## [1] &quot;Sp1&quot; &quot;Sp2&quot; &quot;Sp3&quot; &quot;Sp4&quot; &quot;Sp5&quot;</code></pre>
+<p>Entonces, para acceder a la abundancia de <code>Sp1</code> en cada uno de los 100 sitios de muestreo, podemos utilizar el operador <code>$</code> seguido del nombre de la columna que queremos inspeccionar:</p>
+<pre class="r"><code>base.sp$Sp1</code></pre>
+<pre><code>##   [1] 5 5 6 5 3 4 3 4 6 5 4 5 4 6 5 5 5 5 5 3 5 6 5 6 5 4 7 4 3 6 5 3 5 5 4 6 6
+##  [38] 7 6 4 6 6 6 4 5 6 4 5 7 5 6 6 6 6 5 6 5 4 5 7 7 5 6 8 6 5 6 5 6 6 5 6 6 4
+##  [75] 5 7 4 4 4 6 6 2 5 2 6 4 5 5 6 4 5 4 5 5 4 6 5 5 6 5</code></pre>
+<p>Igualmente podríamos revisar cuál es la abundancia de las cinco especies en un sitio específico, aunque en este caso, debemos utilizar paréntesis cuadrados para indicar qué fila queremos revisar:</p>
+<pre class="r"><code>base.sp[10, ]</code></pre>
+<pre><code>##    Sp1 Sp2 Sp3 Sp4 Sp5
+## 10   5  10  19   9   6</code></pre>
+<p>Debido a que <code>base.sp</code> es una arreglo bidimensional, debemos incluir una coma intermedia, el valor antes de la coma indica el número de fila, y el valor después de la coma indica el número de columna. De este modo, hemos indicado a R que imprima la fila 10.</p>
+<p>Como se menciona al incio de esta sección, esta base de datos está en formato ancho, yu es común requerir de una base en formato largo. Para esta transformación necesitamos importar la función <code>melt</code>, que está contenida en el paquete <code>reshape2</code>. Al procesar el objeto <code>base.sp</code> crearemos otro objeto que contendrá los mismos datos que <code>base.sp</code> pero en formato largo, no sin antes crear una columna adicional que identifica los sitios de muestreo:</p>
+<pre class="r"><code>base.sp$Sitio &lt;- paste0(&quot;sitio.&quot;, 1:100)
+base.sp.m &lt;- reshape2::melt(base.sp, id.vars = &quot;Sitio&quot;)</code></pre>
+<p>En la función <code>melt</code> el primer argumento es la base en formato ancho que queremos transformar, y el segundo argumento <code>id.vars</code> indica la columna que se utilizará para identificar las unidades de muestreo. Existen otras posibilidades para formatos largos que veremos más tarde.</p>
 <p><a href="Base-de-datos.Rmd">Código fuente de este tutorial</a></p>
 <p><a href="../index.html">Regresar al índice del curso</a></p>
 </div>
