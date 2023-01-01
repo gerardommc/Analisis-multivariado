@@ -1,5 +1,5 @@
 ---
-title: "Bases de datos"
+title: "Introducción a las bases de datos"
 author: "Gerardo Martín"
 date: "10/2/2021"
 output: 
@@ -94,6 +94,18 @@ base.sp.m <- reshape2::melt(base.sp, id.vars = "Sitio")
 ```
 
 En la función `melt` el primer argumento es la base en formato ancho que queremos transformar, y el segundo argumento `id.vars` indica la columna que se utilizará para identificar las unidades de muestreo. Existen otras posibilidades para formatos largos que veremos más tarde.
+
+Para guardar una base de datos desde R, podemos utilizar la función `write.csv`, para la base en formato ancho:
+
+```{r eval = F, echo = T}
+write.csv(base.sp, "Base-datos-ancho.csv")
+```
+
+Y la base en formato largo:
+
+```{r eval = F, echo = T}
+write.csv(base.sp.m, "Base-datos-largo.csv")
+```
 
 [Código fuente de este tutorial](Base-de-datos.Rmd)
 

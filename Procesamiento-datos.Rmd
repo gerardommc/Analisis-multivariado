@@ -1,0 +1,82 @@
+---
+title: "Procesamiento de bases de datos"
+author: "Gerardo Martín"
+date: "10/2/2021"
+output: 
+      bookdown::html_document2:
+            toc: true 
+            number_sections: true
+            toc_float: true
+            theme: flatly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Hay muchas operaciones que se pueden hacer en una base de datos, a continuación veremos algunas de las operaciones básicas además de la transformación de formatos largo a ancho y viceversa.
+
+Para este tutorial utilizaremos una base de datos disponible en todas las versiones de R que se llama `mtcars`. Para importarla al espacio de trabajo necesitamos correr el siguiente código:
+
+```{r echo = T}
+data("mtcars")
+```
+
+Esta base de datos contiene información sobre características físicas y consumo de combustible de automóviles vendidos en Estados Unidos. Sobre esta base de datos haremos las siguientes operaciones:
+
+1. Extraer columnas
+2. Extraer filas condicionalmente
+3. Separar y unir tablas
+4. Ordenar de acuerdo con los valores de alguna columna
+5. Agrupar de acuerdo con alguna variable categórica
+
+Para este ejercicio utilizaremos el paquete `plyr`, y si no lo tienen instalado se puede hacer con el siguiente código:
+
+```{r echo = T, eval = F}
+install.packages("plyr")
+```
+
+# Extraer columnas
+
+Para esta operación utilizaremos la función `subset` que quiere decir subconjunto. Para poder realizar esta operación necesitamos conocer los nombres de las columnas de la base `mtcars` mediante la función `names`:
+
+```{r echo = F}
+names(mtcars)
+```
+
+Para conocer el significado de cada una de las variables se puede consutar la ayuda de R:
+
+```{r echo = T, eval = F}
+?mtcars
+```
+
+Entonces para crear una tabla subconjunto de `mtcars` que contenga las variables `mpg` (millas por galón), `cyl` (número de cilindros) y `hp` (caballos de fuerza), corremos el código siguiente:
+
+```{r echo = TRUE}
+mtcars.1 <- subset(mtcars, select = c("mpg", "cyl", "hp"))
+```
+
+El prier argumento es la nombre del objeto que contiene la tabla que queremos procesar (`mtcars`), el segundo argumento, `select` es una cadena de caracteres que contenga los nombres de las columnas que queremos extraer (resultado en tabla \@ref(table:mtcars.1)).
+
+```{r mtcars.1, echo = F}
+knitr::kable(head(mtcars.1), caption = "Primeras seis columnas de la tabla subconjunto de `mtcars` con las columnas `mpg`, `cyl` y `hp`.")
+```
+
+Como resulta evidente, el resultado es otra tabla, con el mismo formato pero que sólo contiene las columnas que indicamos a la función `subset`
+
+# Extraer filas condicionalmente
+
+Al igual que ya extrajimos sólo una fracción de las columnas podemos extraer filas. Al decir condicionalmente nos referimos a que necesitamos identificar un criterio para extraer las filas. Por ejemplo, la variable `vs` indica si un vehículo tiene motor en v (0) ó en línea (1). Entonces si deseamos crear una base que contenga sólo los datos para vehículos con motor en v:
+
+```{r echo = T}
+mtcars.vs <- subset(mtcars, vs == 0)
+```
+
+la condición para crear el subconjunto es que la variable `vs` valga `0`. El operador `==` es de tipo lógico e indica igual a. Otros operadores lógicos son:
+
+1. `!=`, diferente de
+2. `>`, mayor que
+3. `<`, menor que
+
+
+
