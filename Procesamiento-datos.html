@@ -1586,6 +1586,157 @@ border-radius: 0px;
 <li><code>&gt;</code>, mayor que</li>
 <li><code>&lt;</code>, menor que</li>
 </ol>
+<p>Por lo tanto, las siguientes son algunas alternativas para hacer la misma operación:</p>
+<pre class="r"><code>subset(mtcars, vs != 1)
+subset(mtcars, vs &lt; 1)</code></pre>
+<p>Asimismo, es posible utilizsar más de un criterio de manera simultánea, por ejemplo extrayendo las filas donde <code>vs == 0</code> y <code>am == 1</code> (automático–0– o manual–1):</p>
+<pre class="r"><code>mtcars.2 &lt;- subset(mtcars, vs == 0 &amp; am == 1)</code></pre>
+</div>
+<div id="separar-y-unir-tablas" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Separar y unir tablas</h1>
+<p>En ocasiones es necesario capturar datos en tablas separadas, de modo que aprender a unirlas es una habilidad importante. Hay diferentes maneras de unir tablas:</p>
+<ol style="list-style-type: decimal">
+<li>Añadir columnas</li>
+<li>Añadir filas</li>
+</ol>
+<div id="añadir-columnas" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Añadir columnas</h2>
+<p>Al efectuar esta operación estamos introduciendo variables nuevas a una tabla, y por lo tanto nuevas descripciones de nuestras unidades observacionales. Por lo tanto es de suma importancia que las filas coincidan para cada una de las unidades y que ambas tablas a unir tengan el mismo número de filas. Por ejemplo, si hubiésemos capturado la base <code>mtcars</code> en dos tablas separadas, tenemos que asegurarnos de que la fila 1 de ambas bases contenga la información necesaria del vehículo <code>Mazda RX4</code>. Las tablas @ref(table:mtcars.l) u @ref(table:mtcars.d) muestran a <code>mtcars</code> dividida en dos.</p>
+<table>
+<caption>(#tab:mtcars.l)Primeras seis filas de de las primeras cinco columnas de <code>mtcars</code>.</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">mpg</th>
+<th align="right">cyl</th>
+<th align="right">disp</th>
+<th align="right">hp</th>
+<th align="right">drat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Mazda RX4</td>
+<td align="right">21.0</td>
+<td align="right">6</td>
+<td align="right">160</td>
+<td align="right">110</td>
+<td align="right">3.90</td>
+</tr>
+<tr class="even">
+<td align="left">Mazda RX4 Wag</td>
+<td align="right">21.0</td>
+<td align="right">6</td>
+<td align="right">160</td>
+<td align="right">110</td>
+<td align="right">3.90</td>
+</tr>
+<tr class="odd">
+<td align="left">Datsun 710</td>
+<td align="right">22.8</td>
+<td align="right">4</td>
+<td align="right">108</td>
+<td align="right">93</td>
+<td align="right">3.85</td>
+</tr>
+<tr class="even">
+<td align="left">Hornet 4 Drive</td>
+<td align="right">21.4</td>
+<td align="right">6</td>
+<td align="right">258</td>
+<td align="right">110</td>
+<td align="right">3.08</td>
+</tr>
+<tr class="odd">
+<td align="left">Hornet Sportabout</td>
+<td align="right">18.7</td>
+<td align="right">8</td>
+<td align="right">360</td>
+<td align="right">175</td>
+<td align="right">3.15</td>
+</tr>
+<tr class="even">
+<td align="left">Valiant</td>
+<td align="right">18.1</td>
+<td align="right">6</td>
+<td align="right">225</td>
+<td align="right">105</td>
+<td align="right">2.76</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>(#tab:mtcars.d)Primeras seis filas de las últimas cinco columnas de <code>mtcars</code>.</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">wt</th>
+<th align="right">qsec</th>
+<th align="right">vs</th>
+<th align="right">am</th>
+<th align="right">gear</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Mazda RX4</td>
+<td align="right">2.620</td>
+<td align="right">16.46</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">Mazda RX4 Wag</td>
+<td align="right">2.875</td>
+<td align="right">17.02</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Datsun 710</td>
+<td align="right">2.320</td>
+<td align="right">18.61</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">Hornet 4 Drive</td>
+<td align="right">3.215</td>
+<td align="right">19.44</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Hornet Sportabout</td>
+<td align="right">3.440</td>
+<td align="right">17.02</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Valiant</td>
+<td align="right">3.460</td>
+<td align="right">20.22</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">3</td>
+</tr>
+</tbody>
+</table>
+<p>Para unir estas dos tablas, podemos utilizar la función <code>cbind</code>, que quiere decir <em>column bind</em> (unir columnas):</p>
+<pre class="r"><code>mtcars.f &lt;- cbind(mtcars.l, mtcars.d)</code></pre>
+<p>Los argumentos que se utilizan en <code>cbind</code> son todas las tablas que querramos unir en una misma base de datos.</p>
+</div>
+<div id="añadir-filas" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Añadir filas</h2>
+<p>Así como en la adición de columnas teníamos que asegurarnos de tener el mismo número de filas, para añadir filas tenemos que asegurarnos de tener el mismo número de columnas, de modo que las variables que continene cada una de las tablas sean las mismas y en el mismo orden. La función que realiza esta operación es <code>rbind</code>, y funciona de la misma manera que <code>cbind</code>:</p>
+<pre class="r"><code>mtcars.f2 &lt;- rbind(mtcars.t, mtcars.b)</code></pre>
+</div>
 </div>
 
 

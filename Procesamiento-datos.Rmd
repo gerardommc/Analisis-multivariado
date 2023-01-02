@@ -78,5 +78,53 @@ la condición para crear el subconjunto es que la variable `vs` valga `0`. El op
 2. `>`, mayor que
 3. `<`, menor que
 
+Por lo tanto, las siguientes son algunas alternativas para hacer la misma operación:
 
+```{r echo=T, eval=F}
+subset(mtcars, vs != 1)
+subset(mtcars, vs < 1)
+```
+
+Asimismo, es posible utilizsar más de un criterio de manera simultánea, por ejemplo extrayendo las filas donde `vs == 0` y `am == 1` (automático--0-- o manual--1):
+
+```{r echo = T}
+mtcars.2 <- subset(mtcars, vs == 0 & am == 1)
+```
+
+# Separar y unir tablas
+
+En ocasiones es necesario capturar datos en tablas separadas, de modo que aprender a unirlas es una habilidad importante. Hay diferentes maneras de unir tablas:
+
+1. Añadir columnas
+2. Añadir filas
+
+## Añadir columnas
+
+Al efectuar esta operación estamos introduciendo variables nuevas a una tabla, y por lo tanto nuevas descripciones de nuestras unidades observacionales. Por lo tanto es de suma importancia que las filas coincidan para cada una de las unidades y que ambas tablas a unir tengan el mismo número de filas. Por ejemplo, si hubiésemos capturado la base `mtcars` en dos tablas separadas, tenemos que asegurarnos de que la fila 1 de ambas bases contenga la información necesaria del vehículo `Mazda RX4`. Las tablas \@ref(table:mtcars.l) u \@ref(table:mtcars.d) muestran a `mtcars` dividida en dos.
+
+```{r mtcars.l, echo = F}
+mtcars.l <- mtcars[,1:5]
+mtcars.d <- mtcars[, 6:10]
+knitr::kable(head(mtcars.l), caption = "Primeras seis filas de de las primeras cinco columnas de `mtcars`.")
+```
+
+```{r mtcars.d, echo = F}
+knitr::kable(head(mtcars.d), caption = "Primeras seis filas de las últimas cinco columnas de `mtcars`.")
+```
+
+Para unir estas dos tablas, podemos utilizar la función `cbind`, que quiere decir *column bind* (unir columnas):
+
+```{r echo = T}
+mtcars.f <- cbind(mtcars.l, mtcars.d)
+```
+
+Los argumentos que se utilizan en `cbind` son todas las tablas que querramos unir en una misma base de datos.
+
+## Añadir filas
+
+Así como en la adición de columnas teníamos que asegurarnos de tener el mismo número de filas, para añadir filas tenemos que asegurarnos de tener el mismo número de columnas, de modo que las variables que continene cada una de las tablas sean las mismas y en el mismo orden. La función que realiza esta operación es `rbind`, y funciona de la misma manera que `cbind`:
+
+```{r echo = T, eval = F}
+mtcars.f2 <- rbind(mtcars.t, mtcars.b)
+```
 
