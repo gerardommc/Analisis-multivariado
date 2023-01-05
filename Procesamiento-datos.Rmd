@@ -56,7 +56,7 @@ Entonces para crear una tabla subconjunto de `mtcars` que contenga las variables
 mtcars.1 <- subset(mtcars, select = c("mpg", "cyl", "hp"))
 ```
 
-El prier argumento es la nombre del objeto que contiene la tabla que queremos procesar (`mtcars`), el segundo argumento, `select` es una cadena de caracteres que contenga los nombres de las columnas que queremos extraer (resultado en tabla \@ref(table:mtcars.1)).
+El prier argumento es la nombre del objeto que contiene la tabla que queremos procesar (`mtcars`), el segundo argumento, `select` es una cadena de caracteres que contenga los nombres de las columnas que queremos extraer (resultado en tabla \@ref(tab:mtcars.1)).
 
 ```{r mtcars.1, echo = F}
 knitr::kable(head(mtcars.1), caption = "Primeras seis columnas de la tabla subconjunto de `mtcars` con las columnas `mpg`, `cyl` y `hp`.")
@@ -98,9 +98,9 @@ En ocasiones es necesario capturar datos en tablas separadas, de modo que aprend
 1. Añadir columnas
 2. Añadir filas
 
-## Añadir columnas
+## Unir columnas
 
-Al efectuar esta operación estamos introduciendo variables nuevas a una tabla, y por lo tanto nuevas descripciones de nuestras unidades observacionales. Por lo tanto es de suma importancia que las filas coincidan para cada una de las unidades y que ambas tablas a unir tengan el mismo número de filas. Por ejemplo, si hubiésemos capturado la base `mtcars` en dos tablas separadas, tenemos que asegurarnos de que la fila 1 de ambas bases contenga la información necesaria del vehículo `Mazda RX4`. Las tablas \@ref(table:mtcars.l) u \@ref(table:mtcars.d) muestran a `mtcars` dividida en dos.
+Al efectuar esta operación estamos introduciendo variables nuevas a una tabla, y por lo tanto nuevas descripciones de nuestras unidades observacionales. Por lo tanto es de suma importancia que las filas coincidan para cada una de las unidades y que ambas tablas a unir tengan el mismo número de filas. Por ejemplo, si hubiésemos capturado la base `mtcars` en dos tablas separadas, tenemos que asegurarnos de que la fila 1 de ambas bases contenga la información necesaria del vehículo `Mazda RX4`. Las tablas \@ref(tab:mtcars.l) y \@ref(tab:mtcars.d) muestran a `mtcars` dividida en dos.
 
 ```{r mtcars.l, echo = F}
 mtcars.l <- mtcars[,1:5]
@@ -120,11 +120,62 @@ mtcars.f <- cbind(mtcars.l, mtcars.d)
 
 Los argumentos que se utilizan en `cbind` son todas las tablas que querramos unir en una misma base de datos.
 
-## Añadir filas
+## Unir filas
 
 Así como en la adición de columnas teníamos que asegurarnos de tener el mismo número de filas, para añadir filas tenemos que asegurarnos de tener el mismo número de columnas, de modo que las variables que continene cada una de las tablas sean las mismas y en el mismo orden. La función que realiza esta operación es `rbind`, y funciona de la misma manera que `cbind`:
 
 ```{r echo = T, eval = F}
 mtcars.f2 <- rbind(mtcars.t, mtcars.b)
 ```
+
+# Ordenar de acuerdo con valores
+
+En frecuente que las bases de datos no sigan un órden lógico, a menos que hayan sido colectadas de manera secuencia como en una línea temporal. Por lo tanto es de suma utilidad saber cómo se puede ordenar una base de datos. Como es de esperarse, se debe cumplir que el criterio de ordenamiento, debe afectar a todas las columnas, de modo que no se mezcle la información que corresponde con individuos distintos. Aquí cabe hacer una advertencia, y es que ordenar una columna es un ejercicio muy sencillo, que se puede hacer en Excel, sin embargo, por defecto el orden sólo se aplica a una columna lo que invalida toda la base de datos.
+
+Para ordenar una tabla en R utilizaremos el paquete `plyr`. Para instalarlo podemos ejecutar la siquiente línea de código:
+
+```{r echo = T, eval = F}
+install.packages("dplyr")
+```
+
+Y para abrirlo una vez instalado:
+
+```{r echo = T, message=F, warning=F}
+library(dplyr)
+```
+
+El paquete `dplyr` utiliza una sintaxis un tanto diferente de muchos paquetes de R. Normalmente, se llama la función y dentro de los paréntesis se indica al objeto que se procesará. En este caso, primero se llama el objeto (`mtcars`, por ejemplo) y después se indica la función que se aplicará al objeto y los argumentos siguientes depués del operador `%>%`. La función que ordena una tabla es `arrange`:
+
+```{r echo = T}
+mtcars.desc <- mtcars %>% arrange(desc(mpg))
+```
+
+donde hemos creado un nuevo objeto `mtcars.desc` ordenado de mayor a menor (descendiente) con base en la columna `mpg`. Para ordenar ascendentemente (tabla \@ref(tab:mtcars.desc)):
+
+```{r echo = T}
+mtcars.asc <- mtcars %>% arrange(mpg)
+```
+
+```{r mtcars.desc, echo = F}
+knitr::kable(head(mtcars.desc), caption = "Base de datos `mtcars` ordenada con base en la columna `mpg` de mayor a menor.")
+```
+
+Este método, puede aplicarse con más de una columna en mente, priorizando de izquierda a derecha:
+
+```{r echo = T}
+mtcars.ord1 <- mtcars %>% arrange(mpg, desc(hp))
+```
+
+# Agrupar de acuerdo con una variable categórica
+
+Las bases de datos se pueden resumir de algunas maneras, por ejemplo en `mtcars` podríamos calcular el consumo promedio de combustible de los vehículos con 4, 6 y 8 cilindros. Además del promedio también podríamos obtener la desviación estándar. No son operaciones complicadas, pero cuando la base de datos es grande, hacerlo a mano puede requerir de mucho tiempo. Afortunadamente, contamos con `dplyr` para ejecutar esta opeación de manera eficiente, con la función `group_by` y `summarise` (tabla \@ref(tab:mtcars.prom)):
+
+```{r echo = T}
+mtcars.prom <- mtcars %>% group_by(cyl) %>% summarise(mpg = mean(mpg), hp = mean(hp))
+```
+
+```{r mtcars.prom, echo = F}
+knitr::kable(mtcars.prom, caption = "Base `mtcars` agrupada por número de cilindros en las columnas `mpg` y `hp`.") 
+```
+
 

@@ -1,0 +1,68 @@
+---
+title: "Examen gráfico de los datos multivariados"
+author: "Gerardo Martín"
+date: "10/2/2021"
+output: 
+      bookdown::html_document2:
+            toc: true 
+            number_sections: true
+            toc_float: true
+            theme: flatly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Para esta lección volveremos a la base de datos de abundancia de especies. Recordemos que para importar la base de datos necesitamos conocer la ruta donde se ubica el archivo y su nombre. En mi caso:
+
+```{r echo = T}
+spp <- read.csv("Datos-bases/Datos-sp.csv")
+```
+
+El primer examen que haremos es una gráfica de dispersión entre pares de variables, para poder identificar cuáles están correlacionadas entre sí, positiva o negativamente. Usaremos la función `pairs`, la cual produriá automáticamente el gráfico para cada par de variables:
+
+```{r pares, echo = T, fig.height=5, fig.width=5, fig.align='center'}
+pairs(spp, upper.panel = NULL)
+```
+
+Este análisis gráfico podemos acompañarlo de una tabla con los coeficientes de correlación estimados:
+
+```{r echo = T}
+cor(spp)
+```
+
+Para representar la relación entre tres variables simultáneamente necesitamos un gráfico en 3d:
+
+```{r 3d, fig.height=6, fig.width=6, fig.align='center', fig.cap = "Gráfico de dispersión para tres variables especies correlacionadas entre sí."}
+library(lattice)
+cloud(Sp3 ~ Sp4 + Sp5, spp, type="p",screen=c(x=-55,y=-30,z=-20),zlab=list(rot=90), pch=16)
+```
+
+En este caso decidí mostrar el gráfico de dispersión entre Sp3, 4 y 5 porque están mutuamente correlacionadas (figura \@ref(fig:pares)). Por lo tanto, podríamos representar a estas tres especies como una sola en una comunidad, pues se predicen mutuamente. No obstante, los grupos de variables que se predicen mutuamente no siempre se pueden identificar tan claramente como en este caso. Los análisis multivariados nos ayudarán a identificar grupos de variables que se pueden *resumir* para disminuir la complejidad de una base de datos.
+
+Una técnica comunmente utilizada es el análisis de componentes principales, el cual por medio de la correlación entre variables genera **componentes** que representan la mayor proporción de variabilidad en el menor número de variables. En R, podemos hacer un análisis de componentes principales con la función `prcomp`:
+
+```{r prcomp, echo = T}
+pca <- prcomp(spp)
+```
+
+El objeto resultante de este análisis podemos graficarlo, para ver cuánta varianza contiene cada uno de los componentes que genera y cómo están constituidos:
+
+```{r pr.graf1, echo=T, fig.height=5, fig.width=5, fig.cap="Gráfico de la varianza que contiene cada componente.", fig.align='center'}
+plot(pca)
+```
+
+Este gráfico contiene en el eje de las $x$ la identificación del componente (1-5), y en el $y$ la varianza. Los componentes simbre están ordenados descendentemente con base en la varianza. Generalmente se recomienda utilizar los componentes antes del "codo" que se forma entre los dos ejes. En este caso resulta evidente que los componentes más relevanes son el 1 y 2, lo cual podemos revisar con el porcentaje de varianza que contienen:
+
+```{r}
+pca$sdev^2/sum(pca$sdev^2)
+```
+
+Ahora podemos ver cómo están constituidos estos dos con el gráfico:
+
+```{r echo=T, fig.align='center', fig.height=5, fig.width=5}
+biplot(pca)
+```
+
+
