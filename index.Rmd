@@ -29,6 +29,6 @@ Contenidos parciales de Análisis multivariado
 
 4. Análisis exploratorio de datos multidimensionales
 
-    - [Tutorial de gráficos](Tutorial-graficos.pdf)
-    - [Examen gráfico](Examen-grafico.pdf)
-    - [Datos faltantes y atípicos](Ausentes-atipicos.pdf)
+    - [Tutorial de gráficos](Tutorial-graficos.html)
+    - [Examen gráfico](Examen-grafico.html)
+    - [Datos faltantes y atípicos](Ausentes-atipicos.html)
