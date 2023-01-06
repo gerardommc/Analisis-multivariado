@@ -56,9 +56,9 @@ Entonces para crear una tabla subconjunto de `mtcars` que contenga las variables
 mtcars.1 <- subset(mtcars, select = c("mpg", "cyl", "hp"))
 ```
 
-El prier argumento es la nombre del objeto que contiene la tabla que queremos procesar (`mtcars`), el segundo argumento, `select` es una cadena de caracteres que contenga los nombres de las columnas que queremos extraer (resultado en tabla \@ref(tab:mtcars.1)).
+El prier argumento es la nombre del objeto que contiene la tabla que queremos procesar (`mtcars`), el segundo argumento, `select` es una cadena de caracteres que contenga los nombres de las columnas que queremos extraer (resultado en tabla \@ref(tab:mtcars1)).
 
-```{r mtcars.1, echo = F}
+```{r mtcars1, echo = F}
 knitr::kable(head(mtcars.1), caption = "Primeras seis columnas de la tabla subconjunto de `mtcars` con las columnas `mpg`, `cyl` y `hp`.")
 ```
 
@@ -100,15 +100,15 @@ En ocasiones es necesario capturar datos en tablas separadas, de modo que aprend
 
 ## Unir columnas
 
-Al efectuar esta operación estamos introduciendo variables nuevas a una tabla, y por lo tanto nuevas descripciones de nuestras unidades observacionales. Por lo tanto es de suma importancia que las filas coincidan para cada una de las unidades y que ambas tablas a unir tengan el mismo número de filas. Por ejemplo, si hubiésemos capturado la base `mtcars` en dos tablas separadas, tenemos que asegurarnos de que la fila 1 de ambas bases contenga la información necesaria del vehículo `Mazda RX4`. Las tablas \@ref(tab:mtcars.l) y \@ref(tab:mtcars.d) muestran a `mtcars` dividida en dos.
+Al efectuar esta operación estamos introduciendo variables nuevas a una tabla, y por lo tanto nuevas descripciones de nuestras unidades observacionales. Por lo tanto es de suma importancia que las filas coincidan para cada una de las unidades y que ambas tablas a unir tengan el mismo número de filas. Por ejemplo, si hubiésemos capturado la base `mtcars` en dos tablas separadas, tenemos que asegurarnos de que la fila 1 de ambas bases contenga la información necesaria del vehículo `Mazda RX4`. Las tablas \@ref(tab:mtcarsl) y \@ref(tab:mtcarsd) muestran a `mtcars` dividida en dos.
 
-```{r mtcars.l, echo = F}
+```{r mtcarsl, echo = F}
 mtcars.l <- mtcars[,1:5]
 mtcars.d <- mtcars[, 6:10]
 knitr::kable(head(mtcars.l), caption = "Primeras seis filas de de las primeras cinco columnas de `mtcars`.")
 ```
 
-```{r mtcars.d, echo = F}
+```{r mtcarsd, echo = F}
 knitr::kable(head(mtcars.d), caption = "Primeras seis filas de las últimas cinco columnas de `mtcars`.")
 ```
 
@@ -150,13 +150,13 @@ El paquete `dplyr` utiliza una sintaxis un tanto diferente de muchos paquetes de
 mtcars.desc <- mtcars %>% arrange(desc(mpg))
 ```
 
-donde hemos creado un nuevo objeto `mtcars.desc` ordenado de mayor a menor (descendiente) con base en la columna `mpg`. Para ordenar ascendentemente (tabla \@ref(tab:mtcars.desc)):
+donde hemos creado un nuevo objeto `mtcars.desc` ordenado de mayor a menor (descendiente) con base en la columna `mpg`. Para ordenar ascendentemente (tabla \@ref(tab:mtcarsdesc)):
 
 ```{r echo = T}
 mtcars.asc <- mtcars %>% arrange(mpg)
 ```
 
-```{r mtcars.desc, echo = F}
+```{r mtcarsdesc, echo = F}
 knitr::kable(head(mtcars.desc), caption = "Base de datos `mtcars` ordenada con base en la columna `mpg` de mayor a menor.")
 ```
 
@@ -168,13 +168,13 @@ mtcars.ord1 <- mtcars %>% arrange(mpg, desc(hp))
 
 # Agrupar de acuerdo con una variable categórica
 
-Las bases de datos se pueden resumir de algunas maneras, por ejemplo en `mtcars` podríamos calcular el consumo promedio de combustible de los vehículos con 4, 6 y 8 cilindros. Además del promedio también podríamos obtener la desviación estándar. No son operaciones complicadas, pero cuando la base de datos es grande, hacerlo a mano puede requerir de mucho tiempo. Afortunadamente, contamos con `dplyr` para ejecutar esta opeación de manera eficiente, con la función `group_by` y `summarise` (tabla \@ref(tab:mtcars.prom)):
+Las bases de datos se pueden resumir de algunas maneras, por ejemplo en `mtcars` podríamos calcular el consumo promedio de combustible de los vehículos con 4, 6 y 8 cilindros. Además del promedio también podríamos obtener la desviación estándar. No son operaciones complicadas, pero cuando la base de datos es grande, hacerlo a mano puede requerir de mucho tiempo. Afortunadamente, contamos con `dplyr` para ejecutar esta opeación de manera eficiente, con la función `group_by` y `summarise` (tabla \@ref(tab:mtcarsprom)):
 
 ```{r echo = T}
 mtcars.prom <- mtcars %>% group_by(cyl) %>% summarise(mpg = mean(mpg), hp = mean(hp))
 ```
 
-```{r mtcars.prom, echo = F}
+```{r mtcarsprom, echo = F}
 knitr::kable(mtcars.prom, caption = "Base `mtcars` agrupada por número de cilindros en las columnas `mpg` y `hp`.") 
 ```
 

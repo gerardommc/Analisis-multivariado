@@ -6,6 +6,7 @@ output:
       bookdown::html_document2:
             toc: true 
             number_sections: true
+            fig_caption: true
             toc_float: true
             theme: flatly
 ---
@@ -14,4 +15,50 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Aquí veremos cómo hacer gráficos en R
+# Introducción a gráficos con R
+
+El lenguaje de programación R es muy poderoso para la generación de gráficos. Existen varios paquetes gratuitos para instalar con los comandos usuales y que facilitan la creación de gráficos de distinta naturaleza y con sintaxis muy diferentes. Algunos de los más populares son:
+
+1. `graphics`. Es el paquete de gráficos por defecto en R. Normalmente se crea un gráfico base con la función `plot` y después se añaden otros componentes como texto, puntos, leyenda y guía de colores.
+2. `scatterplot3d`. Es un paquete que permite crear gráficos de dispersión en tres dimensiones y utiliza la misma sintaxis que `graphics`
+3. `lattice`. Su sintaxis está basada ampliamente en `graphics` y facilita la presentación de datos multivariados mucho mejor que `graphics`. También tiene funciones para crear gráficos en 3d.
+4. `ggplot2`. Es uno de los paquetes gráficos más modernos y potentes y con la sintaxis más diferente de todos, pero al mismo tiempo muy asequible. Está pensado en ciencia de datos por lo que es muy potente para gráficos de datos multivariados.
+5. `plot3D`. Es un paquete muy potente para generar todo tipo de gráficos en 3d, aunque su sintaxis es la tradicional del paquete `graphics`.
+
+Aquí nos enfocaremos en usar `graphics` y `ggplot2`, por ser los más populares, el primero por la larga tradición con que ya cuenta y el segundo por moderno, potente y popular.
+
+## Tipos de gráficos
+
+Existen muchos tipos de gráficos y herramientas visuales para ayudarnos a hacer un análisis exploratorio, representar nuestros resultados ó comunicar algonimportanto que nuestros datos representan. Los gráficos pueden representar ciertas características de una sola variable, de dos o relaciones entre dos conjuntos. Por ejemplo los **gráficos de caja** representan las medidas de tendencia central de una sola variable, que puede estar dividida en categorías o niveles de otra variable (figura \@ref(fig:boxp1)).
+
+```{r boxp1, echo=F, fig.height=5, fig.width=5, fig.align='center', fig.cap="Ejemplo de gráfico de cajas para una variable con media y mediana de cero (línea negra del centro). Los límites de la caja central representan los cuartiles 2 y 3 (25 y 75%), y las líneas de rango los intervalos de confianza al 95%."}
+x <- rnorm(100)
+boxplot(x)
+```
+
+Para representar la distribución estadística de una variable, también existen los histogramas y gráficos de densidad. A diferencia de los gráficos de cajas, estos últimos muestran la candidad de observaciones que hay para cada valor de una variable (figura \@ref(fig:densidad)).
+
+```{r densidad, echo=F, fig.height=8, fig.width=4, fig.align='center', fig.cap="Histograma y gráfico de densidad para la misma variable que en el gráfico de cajas."}
+par(mfrow = c(2, 1))
+hist(x, main = "Histograma de x", xlab = "", ylab = "Densidad de x")
+plot(density(x), main = "Densidad de X", xlab = "x", ylab = "Densidad de x")
+```
+
+Un tipo de gráficos bi-variado (permite la visualización de dos variables), son los gráficos de dispersión. Se consiguen marcando los puntos en el plano euclidiano donde coinciden los dos conjuntos que se están graficando y sirven para visualizar tendencias y sus formas, es decir si lo valores de un conjunto aumentan o disminuyen cuando el otro conjunto aumenta de valor (figura \@ref(fig:disper))
+
+```{r disper, echo=F, fig.height=4.5, fig.width=8, fig.cap="Gráfico de dispersión para la misma variable y otras dos con alta (izquierda) y baja correlación (derecha)."}
+y.1 <- x + rnorm(100, 1.1, 0.25)
+y.2 <- rnorm(100)
+
+par(mfrow = c(1, 2))
+plot(x, y.1)
+plot(x, y.2)
+```
+
+
+# Tutorial
+
+
+## R `graphics`
+
+Lo primero que

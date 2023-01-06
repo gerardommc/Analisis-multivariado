@@ -1524,9 +1524,9 @@ border-radius: 0px;
 <pre class="r"><code>?mtcars</code></pre>
 <p>Entonces para crear una tabla subconjunto de <code>mtcars</code> que contenga las variables <code>mpg</code> (millas por galón), <code>cyl</code> (número de cilindros) y <code>hp</code> (caballos de fuerza), corremos el código siguiente:</p>
 <pre class="r"><code>mtcars.1 &lt;- subset(mtcars, select = c(&quot;mpg&quot;, &quot;cyl&quot;, &quot;hp&quot;))</code></pre>
-<p>El prier argumento es la nombre del objeto que contiene la tabla que queremos procesar (<code>mtcars</code>), el segundo argumento, <code>select</code> es una cadena de caracteres que contenga los nombres de las columnas que queremos extraer (resultado en tabla @ref(tab:mtcars.1)).</p>
+<p>El prier argumento es la nombre del objeto que contiene la tabla que queremos procesar (<code>mtcars</code>), el segundo argumento, <code>select</code> es una cadena de caracteres que contenga los nombres de las columnas que queremos extraer (resultado en tabla <a href="#tab:mtcars1">1.1</a>).</p>
 <table>
-<caption>(#tab:mtcars.1)Primeras seis columnas de la tabla subconjunto de <code>mtcars</code> con las columnas <code>mpg</code>, <code>cyl</code> y <code>hp</code>.</caption>
+<caption><span id="tab:mtcars1">Table 1.1: </span>Primeras seis columnas de la tabla subconjunto de <code>mtcars</code> con las columnas <code>mpg</code>, <code>cyl</code> y <code>hp</code>.</caption>
 <thead>
 <tr class="header">
 <th align="left"></th>
@@ -1601,9 +1601,9 @@ subset(mtcars, vs &lt; 1)</code></pre>
 </ol>
 <div id="unir-columnas" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Unir columnas</h2>
-<p>Al efectuar esta operación estamos introduciendo variables nuevas a una tabla, y por lo tanto nuevas descripciones de nuestras unidades observacionales. Por lo tanto es de suma importancia que las filas coincidan para cada una de las unidades y que ambas tablas a unir tengan el mismo número de filas. Por ejemplo, si hubiésemos capturado la base <code>mtcars</code> en dos tablas separadas, tenemos que asegurarnos de que la fila 1 de ambas bases contenga la información necesaria del vehículo <code>Mazda RX4</code>. Las tablas @ref(tab:mtcars.l) y @ref(tab:mtcars.d) muestran a <code>mtcars</code> dividida en dos.</p>
+<p>Al efectuar esta operación estamos introduciendo variables nuevas a una tabla, y por lo tanto nuevas descripciones de nuestras unidades observacionales. Por lo tanto es de suma importancia que las filas coincidan para cada una de las unidades y que ambas tablas a unir tengan el mismo número de filas. Por ejemplo, si hubiésemos capturado la base <code>mtcars</code> en dos tablas separadas, tenemos que asegurarnos de que la fila 1 de ambas bases contenga la información necesaria del vehículo <code>Mazda RX4</code>. Las tablas <a href="#tab:mtcarsl">3.1</a> y <a href="#tab:mtcarsd">3.2</a> muestran a <code>mtcars</code> dividida en dos.</p>
 <table>
-<caption>(#tab:mtcars.l)Primeras seis filas de de las primeras cinco columnas de <code>mtcars</code>.</caption>
+<caption><span id="tab:mtcarsl">Table 3.1: </span>Primeras seis filas de de las primeras cinco columnas de <code>mtcars</code>.</caption>
 <thead>
 <tr class="header">
 <th align="left"></th>
@@ -1666,7 +1666,7 @@ subset(mtcars, vs &lt; 1)</code></pre>
 </tbody>
 </table>
 <table>
-<caption>(#tab:mtcars.d)Primeras seis filas de las últimas cinco columnas de <code>mtcars</code>.</caption>
+<caption><span id="tab:mtcarsd">Table 3.2: </span>Primeras seis filas de las últimas cinco columnas de <code>mtcars</code>.</caption>
 <thead>
 <tr class="header">
 <th align="left"></th>
@@ -1747,10 +1747,10 @@ subset(mtcars, vs &lt; 1)</code></pre>
 <pre class="r"><code>library(dplyr)</code></pre>
 <p>El paquete <code>dplyr</code> utiliza una sintaxis un tanto diferente de muchos paquetes de R. Normalmente, se llama la función y dentro de los paréntesis se indica al objeto que se procesará. En este caso, primero se llama el objeto (<code>mtcars</code>, por ejemplo) y después se indica la función que se aplicará al objeto y los argumentos siguientes depués del operador <code>%&gt;%</code>. La función que ordena una tabla es <code>arrange</code>:</p>
 <pre class="r"><code>mtcars.desc &lt;- mtcars %&gt;% arrange(desc(mpg))</code></pre>
-<p>donde hemos creado un nuevo objeto <code>mtcars.desc</code> ordenado de mayor a menor (descendiente) con base en la columna <code>mpg</code>. Para ordenar ascendentemente (tabla @ref(tab:mtcars.desc)):</p>
+<p>donde hemos creado un nuevo objeto <code>mtcars.desc</code> ordenado de mayor a menor (descendiente) con base en la columna <code>mpg</code>. Para ordenar ascendentemente (tabla <a href="#tab:mtcarsdesc">4.1</a>):</p>
 <pre class="r"><code>mtcars.asc &lt;- mtcars %&gt;% arrange(mpg)</code></pre>
 <table>
-<caption>(#tab:mtcars.desc)Base de datos <code>mtcars</code> ordenada con base en la columna <code>mpg</code> de mayor a menor.</caption>
+<caption><span id="tab:mtcarsdesc">Table 4.1: </span>Base de datos <code>mtcars</code> ordenada con base en la columna <code>mpg</code> de mayor a menor.</caption>
 <colgroup>
 <col width="22%" />
 <col width="7%" />
@@ -1873,10 +1873,10 @@ subset(mtcars, vs &lt; 1)</code></pre>
 </div>
 <div id="agrupar-de-acuerdo-con-una-variable-categórica" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Agrupar de acuerdo con una variable categórica</h1>
-<p>Las bases de datos se pueden resumir de algunas maneras, por ejemplo en <code>mtcars</code> podríamos calcular el consumo promedio de combustible de los vehículos con 4, 6 y 8 cilindros. Además del promedio también podríamos obtener la desviación estándar. No son operaciones complicadas, pero cuando la base de datos es grande, hacerlo a mano puede requerir de mucho tiempo. Afortunadamente, contamos con <code>dplyr</code> para ejecutar esta opeación de manera eficiente, con la función <code>group_by</code> y <code>summarise</code> (tabla @ref(tab:mtcars.prom)):</p>
+<p>Las bases de datos se pueden resumir de algunas maneras, por ejemplo en <code>mtcars</code> podríamos calcular el consumo promedio de combustible de los vehículos con 4, 6 y 8 cilindros. Además del promedio también podríamos obtener la desviación estándar. No son operaciones complicadas, pero cuando la base de datos es grande, hacerlo a mano puede requerir de mucho tiempo. Afortunadamente, contamos con <code>dplyr</code> para ejecutar esta opeación de manera eficiente, con la función <code>group_by</code> y <code>summarise</code> (tabla <a href="#tab:mtcarsprom">5.1</a>):</p>
 <pre class="r"><code>mtcars.prom &lt;- mtcars %&gt;% group_by(cyl) %&gt;% summarise(mpg = mean(mpg), hp = mean(hp))</code></pre>
 <table>
-<caption>(#tab:mtcars.prom)Base <code>mtcars</code> agrupada por número de cilindros en las columnas <code>mpg</code> y <code>hp</code>.</caption>
+<caption><span id="tab:mtcarsprom">Table 5.1: </span>Base <code>mtcars</code> agrupada por número de cilindros en las columnas <code>mpg</code> y <code>hp</code>.</caption>
 <thead>
 <tr class="header">
 <th align="right">cyl</th>

@@ -20,15 +20,15 @@ Para esta lección volveremos a la base de datos de abundancia de especies. Reco
 spp <- read.csv("Datos-bases/Datos-sp.csv")
 ```
 
-El primer examen que haremos es una gráfica de dispersión entre pares de variables, para poder identificar cuáles están correlacionadas entre sí, positiva o negativamente. Usaremos la función `pairs`, la cual produriá automáticamente el gráfico para cada par de variables:
+El primer examen que haremos es una gráfica de dispersión entre pares de variables, para poder identificar cuáles están correlacionadas entre sí, positiva o negativamente. Usaremos la función `pairs`, la cual produriá automáticamente el gráfico para cada par de variables (figura \@ref(fig:pares)):
 
 ```{r pares, echo = T, fig.height=5, fig.width=5, fig.align='center'}
 pairs(spp, upper.panel = NULL)
 ```
 
-Este análisis gráfico podemos acompañarlo de una tabla con los coeficientes de correlación estimados:
+Este análisis gráfico podemos acompañarlo de una tabla con los coeficientes de correlación estimados (tabla \@ref(tab:cor)):
 
-```{r echo = T}
+```{r cor, echo = T}
 cor(spp)
 ```
 
@@ -49,7 +49,7 @@ pca <- prcomp(spp)
 
 El objeto resultante de este análisis podemos graficarlo, para ver cuánta varianza contiene cada uno de los componentes que genera y cómo están constituidos:
 
-```{r pr.graf1, echo=T, fig.height=5, fig.width=5, fig.cap="Gráfico de la varianza que contiene cada componente.", fig.align='center'}
+```{r prgraf1, echo=T, fig.height=5, fig.width=5, fig.cap="Gráfico de la varianza que contiene cada componente.", fig.align='center'}
 plot(pca)
 ```
 
