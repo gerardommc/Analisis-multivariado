@@ -80,7 +80,7 @@ Comparación de medias:
 1. ANOVA ó ANODE
 2. Regresión lineal
 
-Ejemplo NOVA:
+Ejemplo ANOVA:
 
 $$ Peso(Regimen) =  \alpha + \beta_{Regimen} $$
 

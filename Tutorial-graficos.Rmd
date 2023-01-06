@@ -32,6 +32,7 @@ Aquí nos enfocaremos en usar `graphics` y `ggplot2`, por ser los más populares
 Existen muchos tipos de gráficos y herramientas visuales para ayudarnos a hacer un análisis exploratorio, representar nuestros resultados ó comunicar algonimportanto que nuestros datos representan. Los gráficos pueden representar ciertas características de una sola variable, de dos o relaciones entre dos conjuntos. Por ejemplo los **gráficos de caja** representan las medidas de tendencia central de una sola variable, que puede estar dividida en categorías o niveles de otra variable (figura \@ref(fig:boxp1)).
 
 ```{r boxp1, echo=F, fig.height=5, fig.width=5, fig.align='center', fig.cap="Ejemplo de gráfico de cajas para una variable con media y mediana de cero (línea negra del centro). Los límites de la caja central representan los cuartiles 2 y 3 (25 y 75%), y las líneas de rango los intervalos de confianza al 95%."}
+set.seed(154)
 x <- rnorm(100)
 boxplot(x)
 ```
@@ -58,7 +59,6 @@ plot(x, y.2)
 
 # Tutorial
 
-
 ## R `graphics`
 
-Lo primero que
+La función base 
