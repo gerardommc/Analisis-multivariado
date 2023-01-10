@@ -178,4 +178,6 @@ mtcars.prom <- mtcars %>% group_by(cyl) %>% summarise(mpg = mean(mpg), hp = mean
 knitr::kable(mtcars.prom, caption = "Base `mtcars` agrupada por número de cilindros en las columnas `mpg` y `hp`.") 
 ```
 
+[Código fuente de este tutorial](Procesamiento-datos.Rmd)
 
+[Regresar al índice del curso](index.html)
