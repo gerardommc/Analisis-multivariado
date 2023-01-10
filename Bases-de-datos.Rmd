@@ -107,6 +107,6 @@ Y la base en formato largo:
 write.csv(base.sp.m, "Base-datos-largo.csv")
 ```
 
-[Código fuente de este tutorial](Base-de-datos.Rmd)
+[Código fuente de este tutorial](Bases-de-datos.Rmd)
 
 [Regresar al índice del curso](../index.html)

@@ -1,0 +1,16 @@
+---
+title: "Identificación de datos faltantes y atípicos"
+author: "Gerardo Martín"
+date: "10/2/2021"
+output: 
+      bookdown::html_document2:
+            toc: true 
+            number_sections: true
+            toc_float: true
+            theme: flatly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
