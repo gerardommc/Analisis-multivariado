@@ -41,6 +41,8 @@ cloud(Sp3 ~ Sp4 + Sp5, spp, type="p",screen=c(x=-55,y=-30,z=-20),zlab=list(rot=9
 
 En este caso decidí mostrar el gráfico de dispersión entre Sp3, 4 y 5 porque están mutuamente correlacionadas (figura \@ref(fig:pares)). Por lo tanto, podríamos representar a estas tres especies como una sola en una comunidad, pues se predicen mutuamente. No obstante, los grupos de variables que se predicen mutuamente no siempre se pueden identificar tan claramente como en este caso. Los análisis multivariados nos ayudarán a identificar grupos de variables que se pueden *resumir* para disminuir la complejidad de una base de datos.
 
+# Análisis de componentes principales
+
 Una técnica comunmente utilizada es el análisis de componentes principales, el cual por medio de la correlación entre variables genera **componentes** que representan la mayor proporción de variabilidad en el menor número de variables. En R, podemos hacer un análisis de componentes principales con la función `prcomp`:
 
 ```{r prcomp, echo = T}
@@ -59,10 +61,97 @@ Este gráfico contiene en el eje de las $x$ la identificación del componente (1
 pca$sdev^2/sum(pca$sdev^2)
 ```
 
-Ahora podemos ver cómo están constituidos estos dos con el gráfico:
+Ahora podemos ver cómo están constituidos estos dos componentes con el gráfico:
 
-```{r echo=T, fig.align='center', fig.height=5, fig.width=5}
+```{r bip, echo=T, fig.align='center', fig.height=5, fig.width=5}
 biplot(pca)
 ```
 
+Para interpretar este gráfico, podemos guiarnos con la figura \@ref(fig:cor). En \@ref(fig:bip) vemos que las flechas rojas con las etiquetas `Sp1` y `Sp2` apuntan en una dirección muy similar, lo cual quiere decir que están positivamente correlacionadas, y lo mismo ocurre con `Sp3` y `Sp4`. Estos dos grupos de especies, `Sp1`-` Sp2` y `Sp3`-`Sp4` son *ortogonales* puesto que no están correlacionados, lo cual podemos ver con las flechas prácticamente perpendiculares entre sí. En términos prácticos podemos inferir que la presencia de `Sp1` y `Sp2` no afecta la presencia de `Sp3` y `Sp4`. En relación a `Sp5`, su vector apunta en dirección opuesta de los vectores de `Sp3` y `Sp4`, debido a que están negativamente correlacionadas (Figura \@ref(fig:cor)).
 
+# Mediciones de similitud
+
+Así como hemos analizado en mayor detalle la relación multivariada entre todas las especies que conforman la base `spp`, es posible compara entre sí todos los sitios de muestreo, de modo que podamos identificar cuánto se parecen entre sí. Este tipo de comparaciones se tiene que hacer forzosamente entre pares de sitios o unidades de muestreo, y por lo tanto, seleccionaremos aleatoriamente 10 sitios de los 100 contenidos en `spp`:
+
+```{r echo = T}
+set.seed(10)
+spp.10 <- spp[sample(1:100, 10),]
+
+knitr::kable(spp.10, caption = "Los 10 sitios seleccionados al azar para calcular los índices de similitud.")
+```
+
+Uno de los índices más usados en ciencias para medir la similitud entre sitios es el de Jaccard. Su implementación es muy sencilla por lo que hay pocas implementaciones en paquetes de R. En índice de similitud entre dos sitios es:
+
+$$J(A, B) = \frac{|A \cap B|}{|A \cup B|}$$
+
+donde $|A \cap B|$ es el número de elementos de $A$ que también se encuentran en $B$, y $|A \cup B|$ es el número de elementos que están en ambos conjuntos.
+
+Escribiremos una función para calcular el índice de Jaccard para un par de sitios cualquiera:
+
+```{r echo = T}
+jaccard <- function(A, B){
+    interseccion = length(intersect(A, B))
+    union = length(A) + length(B) - interseccion
+    return (interseccion/union)
+}
+```
+
+Entonces para calcular el índice para los sitios 1 y 2:
+
+```{r echo = T}
+jaccard(spp.10[1,], spp.10[2,])
+```
+Esta operación debemos repetirla para todos los pares de sitios, cuyo resultado se muestra en la figura \@ref(fig:jac)
+
+```{r jac, echo=T, fig.align='center', fig.cap="Índice de jaccard para todos los pares de sitios de `spp.10`.", fig.height=5, fig.width=5}
+m <- matrix(0, 10, 10)
+for (i in 1:10) {
+    for(j in 10:1){
+        m[i, j] <- jaccard(spp.10[i, ], spp.10[j, ])
+    }
+}
+image(m)
+```
+
+## Mediciones más generales de similitud
+
+La similitud medida con el índice de Jaccard está basada en la repetición de elementos en dos conjuntos, y debe ser derivada para todos los pares de sitios. En posible, sin embargo, encontrar medidas de similitud en relación a tendencias inherentes a la base de datos que se está analizando. Una de estas medidas es la distancia. Así como podemos medir distancias físicas entre dos puntos, es posible medir distancias entre conjuntos de variables. Como vimos en la sección de PCA, los datos pueden contener cierta estructura, que se manifiesta como correlación. Paa medir distancias es necesario tomar en cuenta dicha correlación. Para medir distancia entre las características de un sitio y las tedencias encontradas en toda la base de datos pueden hacerse en relación al promedio aritmético de cada una de las variables medidas. Entonces, en la base de datos `spp.10` podemos calcular la media de cada una de las columnas con la función `colMeans`:
+
+```{r echo = T}
+medias <- colMeans(spp.10)
+```
+
+La distancia entre cada sitio de muestreo y el vector de medias puede medirse con el teorema de Pitágoras, lo cual se llama distancia Euclidiana. En este caso, para tomar en cuenta la correlación entre `Sp1`-`Sp2`, y `Sp3`-`Sp4`, necesitamos una matriz de covarianza:
+
+```{r echo = T}
+mat.cov <- cov(spp.10)
+mat.cov
+```
+
+Una vez que tenemos la matriz de covarianza, calculamos la distancia entre las abundancias de cada sitio y la media de cada una de las abundancias de cada especie:
+
+```{r echo = T}
+dists <- mahalanobis(spp.10, center = medias, cov = mat.cov)
+dists.df <- data.frame(Sitio = paste0("Sitio ", 1:10),
+                       Distancia = dists)
+
+knitr::kable(dists.df, caption = "Distancias de Mahalanobis al centroide de las abundancias registradas.")
+```
+
+
+# Mediciones de diversidad
+
+Al medir qué tan equitativamente están distribuidos los recursos entre las especies que conforman un ensable, es necesario derivar algún número que permita la comparación entre comunidades, tomando en cuenta tanto las especies presentes como sus abundancias. Aquí, entran lo que se conoce como índices de diversidad, y son medidas multivariadas de equitatividad. Dos de los índices más utilizados son el de Simpson y el Shanon-Wiener. Aquí calcularemos el índice de Simpson para cada uno de los 10 sitios de muestreo. El paquete `abdiv` tiene una implementación de dicho índice:
+
+```{r echo = T}
+library(abdiv)
+
+simp <- apply(spp.10, 1, simpson)
+simp.df <- data.frame(Sitio = 1:10, Simp.ind = simp)
+
+knitr::kable(simp.df, caption = "Índice de diversidad de Simpson calculado para los sitios 1 a 10.")
+```
+
+[Código fuente de este tutorial](Examen-grafico.Rmd)
+
+[Regresar al índice del curso](index.html)
