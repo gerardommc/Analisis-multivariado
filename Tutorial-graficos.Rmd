@@ -61,4 +61,68 @@ plot(x, y.2)
 
 ## R `graphics`
 
-La función base 
+La función base de este paquete es `plot`, aunque está prácticamente limitada a la generación de gráficos de dispersión y de líneas. En análisis de datos, otras funciones prácticas son  `boxplot` para gráficos de caja e `hist` para histogramas. Para usar la función `plot` necesitamos dos argumentos como mínimo, las coordenadas $x$ y las $y$.
+
+```{r plot1, echo=T, fig.height=4.5, fig.width=4.5, fig.align='center', fig.cap="Gráfico de dispersión generado con la función `plot`."}
+x <- rnorm(100)
+y <- x + rnorm(100, mean = 1, sd = 0.25)
+
+plot(x, y)
+```
+En la Figura \@ref(fig:plot1) se muestra la simulación de dos variables $x$ con una distribución normal con $\mu = 0$ y $\sigma = 1$, y $y$ que está correlacionada con $x$ pero a la que se añade variación con una distribución normal con $\mu = 0$ y $\sigma = 0.25$. 
+
+Por defecto la función `plot` graficará con puntos, pero esto se puede modificar especificando el *tipo* de gráfico que queremos, por ejemplo:
+
+```{r plot2, echo = T, fig.align= "center", fig.cap = "Uso de `plot` para generar una gráfica con líneas. El argumento `type` puede tomar otros valores como `s`, por *steps*, en este caso `l` significa *lines*.", fig.width=4.5, fig.height=4.5}
+x1 <- 1:10
+y1 <- 1:10
+
+plot(x1, y1, type = "l")
+```
+
+Si quisiéramos explorar la distribución estadística de los valores de ambas variables, podemos utilizar `boxplot` e `hist`:
+
+```{r box, echo = T, fig.align='center', fig.cap="Uso de `boxplot` e `hist` para la variable $x$.", fig.width=4.5, fig.height=4.5}
+boxplot(x)
+hist(x)
+```
+
+La mayoría de las veces que hacemos análisis exploratorio tenemos las variables almacenadas en una base de datos. Además de acceder a los datos dentro de una base, normalmente estamos interesados en analizar la relación entre dos variables. Por lo tanto veamos cómo podemos acceder a los datos e incluir más de una variable de un `data.frame` con la función `boxplot` (incluidos los detalles de simulación):
+
+```{r box2, echo=T, fig.align='center', fig.height=4.5, fig.width=4.5, fig.cap="Uso de `boxplot` con fórmula para representar la distribución de una variable numérica en relación a otra variable categórica con la sintaxis de fórmula."}
+x2 <- rnorm(100, mean = 1, sd = 2)
+x3 <- rnorm(100, mean = 1.3, sd = 1.5)
+tratamiento <- rep(c("a", "b"), each = 100)
+
+base <- data.frame(Variable = c(x2, x3),
+                   Tratamiento = tratamiento)
+
+boxplot(Variable ~ Tratamiento, data = base)
+```
+
+## `ggplot2`
+
+El paquete `ggplot2` es uno de los más modernos y potentes de R para representar datos visualmente. Su sintaxis, sin embargo, es muy distinta de la que se usa en `graphics`. Todas las gráficas de `ggplot2` se generan llamando primero la función `ggplot`, y después se le van añadiendo los elementos gráficos como líneas, puntos, cajas o áreas. Para añadir cada uno de estos elementos gráficos  existen funciones geométricas como `geom_point` o `geom_line` para puntos y líneas respectivamente. El gráfico de la figura \@ref(fig:plot) puede ser replicado en `ggplot` de la siguiente manera:
+
+```{r ggplot, echo = T, fig.align='center', fig.cap="Gráfico de dispersión con `ggplot2`.", fig.width = 4.5 , fig.height= 4.5}
+library(ggplot2)
+
+base.1 <- data.frame(x = x, y = y)
+
+ggplot(base.1) + geom_point(aes(x = x, y = y))
+```
+
+Para un gráfico de cajas:
+
+```{r ggbox, echo = T, fig.align='center', fig.width=4.5, fig.height=4.5}
+ggplot(base) + geom_boxplot(aes(x = Tratamiento, y = Variable))
+```
+Una de las grandísimas ventajas de `ggplot2` es que se pueden utilizar colores para resaltar diferencias entre grupos de datos mucho más fácil que en `graphics`, simplemente añadiendo la variable que queremos utilizar para identificar los colores:
+
+```{r ggboxcol, echo = T, fig.align='center', fig.width=4.5, fig.height=4.5}
+ggplot(base) + geom_boxplot(aes(x = Tratamiento, y = Variable, fill = Tratamiento))
+```
+
+[Código fuente de este tutorial](Tutorial-graficos.Rmd)
+
+[Regresar al índice del curso](index.html)

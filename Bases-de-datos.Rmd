@@ -109,4 +109,4 @@ write.csv(base.sp.m, "Base-datos-largo.csv")
 
 [Código fuente de este tutorial](Bases-de-datos.Rmd)
 
-[Regresar al índice del curso](../index.html)
+[Regresar al índice del curso](index.html)
