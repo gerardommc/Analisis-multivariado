@@ -1,0 +1,55 @@
+---
+title: "Datos faltantes y atípicos"
+author: "Gerardo Martín"
+date: "10/2/2021"
+output: 
+      bookdown::html_document2:
+            toc: true 
+            number_sections: true
+            toc_float: true
+            theme: flatly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Datos faltantes
+
+Los procesos experimentales son complejos, lo que hace que en ocasiones haya pérdida de datos. Esta pérdida es natural, lo que implica que debemos saber qué hacer en caso de estar presente. En R, los datos faltantes aparecen como `NA`, y pueden ocurrir en variables de cualquier naturaleza, como numéricas:
+
+```{r echo = T}
+x <- c(1, 4, 6, 2, 8, NA, 10)
+x
+```
+
+o categóricas:
+
+```{r echo = T}
+a <- c("a", "c", "r", NA, "s", NA, "q")
+a
+```
+
+Los valores faltantes afectan las operaciones que realizamos con las variables en que están presentes, como la suma de sus elementos:
+
+```{r echo = T}
+sum(x)
+```
+
+el promedio ó desviación estándar:
+
+```{r echo = T}
+mean(x)
+sd(x)
+```
+
+Es natural entonces que existan estrategias para identificar los datos faltantes y manejarlos de modo que nos permitan hacer los cálculos que necesitamos. La primera estrategia es su omisión en los cálculos, lo cual está implementado en la mayoría de las funciones nativas de R como un argumento extra `na.rm = TRUE`. Por ejemplo para calcular la suma de elementos:
+
+```{r echo = T}
+sum(x, na.rm = T)
+```
+
+El valor por defecto de `na.rm = FALSE`, porque no debería haber `NA`s, y de este modo se pueden detectar sin previa exploración. Es buena práctica, sin embargo, revisar las bases de datos para encontrarlos y estar conscientes de que es necesario hacer algo al respecto.
+
+## Detección de valores faltantes
+

@@ -31,4 +31,4 @@ Contenidos parciales de Análisis multivariado
 
     - [Tutorial de gráficos](Tutorial-graficos.html)
     - [Examen gráfico](Examen-grafico.html)
-    - [Datos faltantes y atípicos](Ausentes-atipicos.html)
+    - [Datos faltantes y atípicos](Faltantes-atipicos.html)
