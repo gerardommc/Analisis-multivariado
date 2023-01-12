@@ -103,3 +103,15 @@ x <- c(1, 4, 6, 2, 8, NA, 10) #Debemos volver a generar el objeto porque ya reem
 x[is.na(x)] <- mean(x, na.rm = T)
 ```
 
+# Datos atípicos
+
+Los datos atípicos son aquellos cuyos valores son mucho más grandes o pequeños que el resto. Estos pueden ocurrir por alguna de las siguientes razones:
+
+- Muestras contaminadas
+- Muestras de poblaciones diferentes
+- Muestras obtenidas de manera incorrecta
+- Alta variación natural en respuesta a un tratamiento
+- Error de análisis
+- Error de captura
+
+Existen métodos estadísticos para detectar datos atípicos (outliers), basados en el supuestos de que las mediciones erróneas serán sustancialmente diferentes del resto, utilizando medidas de dispersión.
