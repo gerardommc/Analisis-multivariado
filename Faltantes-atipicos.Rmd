@@ -53,3 +53,53 @@ El valor por defecto de `na.rm = FALSE`, porque no debería haber `NA`s, y de es
 
 ## Detección de valores faltantes
 
+Como es usual, es posible hacer esta exploración manualmente, sin embargo, esto no funciona cuando tenemos bases de datos grandes. En este caso R nos puede ayudar a encontrarlos. La primera función que debemos conocer es `is.na`, la cual genera un objeto lógico, indicando si un valor es `NA` (`TRUE`) o no (`FALSE`). En el caso de los objetos `x` y `a`:
+
+```{r echo = T}
+is.na(x)
+is.na(a)
+```
+
+Si tenemos un vector grande, inspeccionar a mano cuáles posiciones tienen valores faltantes puede consumir mucho tiempo, pero esto lo podemos hacer con dos funciones, `table` y `which`. Por un lado `table` nos indicará cuántos `NA` hay en la base o variable que estemos inspeccionando:
+
+```{r echo = T}
+table(is.na(x))
+```
+
+mientras que `which` indicará la posición:
+
+```{r echo = T}
+which(is.na(x))
+```
+
+## Eliminación de valores
+
+Una vez que tenemos identificada la presencia, cantidad y posición de los valores faltantes debemos tomar una serie de decisiones sobre qué haremos con esto valores faltantes. Como vimos al inicio, en algunas funciones podemos eliminar esas posiciones para hacer el cálculo con el argumento `na.rm` (remove NA). Existe una función llamada `na.omit` que podemos aplicar a priori a los objetos que tienen valores faltantes:
+
+```{r echo = T}
+na.omit(x)
+na.omit(a)
+```
+
+Como es de esperarse, eliminar los valores no soluciona ningún problema de fondo, pues solamente estamos ignorándolos, es entonces que es pertinente preguntarnos si es posible reemplazarlos por algún valor.
+
+## Reemplazo de datos faltantes por valores
+
+Este procedimiento es riesgoso, porque en realidad no conocemos el valor real, a menos que haya una razón logística por la cual esos datos no están. Podría tratarse por ejemplo de que los datos que faltan sean 0, debido a que no nos tomamos la molestia de capturarlos en ese caso. Por otra parte, podría tratarse de errores de medición, y por lo tanto cambiar los `NA` por 0's no es un procedimiento aceptable. Necesitamos decidir si los valores que vamos a reemplazar tienen sentido y que afecten lo menos posible el resto del análisis y las conclusiones. 
+Una alternativa es por ejemplo asignarle a esos valores el promedio de esa variable en cada nivel de tratamiento o bloque experimental. 
+
+Para reemplazar con 0's el procedimiento sería el siguiente:
+
+```{r echo = T}
+x[is.na(x)] <- 0 
+x
+```
+
+Y para reemplazar con el valor promedio:
+
+```{r echo = T}
+x <- c(1, 4, 6, 2, 8, NA, 10) #Debemos volver a generar el objeto porque ya reemplazamos el NA con 0
+
+x[is.na(x)] <- mean(x, na.rm = T)
+```
+

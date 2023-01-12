@@ -1526,6 +1526,49 @@ a</code></pre>
 <p>El valor por defecto de <code>na.rm = FALSE</code>, porque no debería haber <code>NA</code>s, y de este modo se pueden detectar sin previa exploración. Es buena práctica, sin embargo, revisar las bases de datos para encontrarlos y estar conscientes de que es necesario hacer algo al respecto.</p>
 <div id="detección-de-valores-faltantes" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span> Detección de valores faltantes</h2>
+<p>Como es usual, es posible hacer esta exploración manualmente, sin embargo, esto no funciona cuando tenemos bases de datos grandes. En este caso R nos puede ayudar a encontrarlos. La primera función que debemos conocer es <code>is.na</code>, la cual genera un objeto lógico, indicando si un valor es <code>NA</code> (<code>TRUE</code>) o no (<code>FALSE</code>). En el caso de los objetos <code>x</code> y <code>a</code>:</p>
+<pre class="r"><code>is.na(x)</code></pre>
+<pre><code>## [1] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE</code></pre>
+<pre class="r"><code>is.na(a)</code></pre>
+<pre><code>## [1] FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE</code></pre>
+<p>Si tenemos un vector grande, inspeccionar a mano cuáles posiciones tienen valores faltantes puede consumir mucho tiempo, pero esto lo podemos hacer con dos funciones, <code>table</code> y <code>which</code>. Por un lado <code>table</code> nos indicará cuántos <code>NA</code> hay en la base o variable que estemos inspeccionando:</p>
+<pre class="r"><code>table(is.na(x))</code></pre>
+<pre><code>## 
+## FALSE  TRUE 
+##     6     1</code></pre>
+<p>mientras que <code>which</code> indicará la posición:</p>
+<pre class="r"><code>which(is.na(x))</code></pre>
+<pre><code>## [1] 6</code></pre>
+</div>
+<div id="eliminación-de-valores" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Eliminación de valores</h2>
+<p>Una vez que tenemos identificada la presencia, cantidad y posición de los valores faltantes debemos tomar una serie de decisiones sobre qué haremos con esto valores faltantes. Como vimos al inicio, en algunas funciones podemos eliminar esas posiciones para hacer el cálculo con el argumento <code>na.rm</code> (remove NA). Existe una función llamada <code>na.omit</code> que podemos aplicar a priori a los objetos que tienen valores faltantes:</p>
+<pre class="r"><code>na.omit(x)</code></pre>
+<pre><code>## [1]  1  4  6  2  8 10
+## attr(,&quot;na.action&quot;)
+## [1] 6
+## attr(,&quot;class&quot;)
+## [1] &quot;omit&quot;</code></pre>
+<pre class="r"><code>na.omit(a)</code></pre>
+<pre><code>## [1] &quot;a&quot; &quot;c&quot; &quot;r&quot; &quot;s&quot; &quot;q&quot;
+## attr(,&quot;na.action&quot;)
+## [1] 4 6
+## attr(,&quot;class&quot;)
+## [1] &quot;omit&quot;</code></pre>
+<p>Como es de esperarse, eliminar los valores no soluciona ningún problema de fondo, pues solamente estamos ignorándolos, es entonces que es pertinente preguntarnos si es posible reemplazarlos por algún valor.</p>
+</div>
+<div id="reemplazo-de-datos-faltantes-por-valores" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Reemplazo de datos faltantes por valores</h2>
+<p>Este procedimiento es riesgoso, porque en realidad no conocemos el valor real, a menos que haya una razón logística por la cual esos datos no están. Podría tratarse por ejemplo de que los datos que faltan sean 0, debido a que no nos tomamos la molestia de capturarlos en ese caso. Por otra parte, podría tratarse de errores de medición, y por lo tanto cambiar los <code>NA</code> por 0’s no es un procedimiento aceptable. Necesitamos decidir si los valores que vamos a reemplazar tienen sentido y que afecten lo menos posible el resto del análisis y las conclusiones.
+Una alternativa es por ejemplo asignarle a esos valores el promedio de esa variable en cada nivel de tratamiento o bloque experimental.</p>
+<p>Para reemplazar con 0’s el procedimiento sería el siguiente:</p>
+<pre class="r"><code>x[is.na(x)] &lt;- 0 
+x</code></pre>
+<pre><code>## [1]  1  4  6  2  8  0 10</code></pre>
+<p>Y para reemplazar con el valor promedio:</p>
+<pre class="r"><code>x &lt;- c(1, 4, 6, 2, 8, NA, 10) #Debemos volver a generar el objeto porque ya reemplazamos el NA con 0
+
+x[is.na(x)] &lt;- mean(x, na.rm = T)</code></pre>
 </div>
 </div>
 
