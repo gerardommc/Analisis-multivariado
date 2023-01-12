@@ -114,4 +114,56 @@ Los datos atípicos son aquellos cuyos valores son mucho más grandes o pequeño
 - Error de análisis
 - Error de captura
 
-Existen métodos estadísticos para detectar datos atípicos (outliers), basados en el supuestos de que las mediciones erróneas serán sustancialmente diferentes del resto, utilizando medidas de dispersión.
+Existen métodos estadísticos para detectar datos atípicos (outliers), basados en el supuestos de que las mediciones erróneas serán sustancialmente diferentes del resto, utilizando medidas de ubicación y dispersión.
+
+Para identificar los datos atípicos podemos comenzar con ver un resumen de los cuartiles. Trabajaremos con una variable extraída de la base `mpg` similar a `mtcars`, pero extraída del paquete `ggplot2`:
+
+```{r echo = T}
+datos <- ggplot2::mpg
+summary(datos$hwy)
+```
+
+y explorar el rango (mínimo y máximo) de valores en que ocurren los datos:
+
+```{r echo = T}
+range(datos$hwy)
+```
+
+Aún cuando esta información es útil no sabemos aún cuántos datos ocurren con los valores identificados de 12.0 y 44.0, para lo cual un histograma y boxplot son útiles:
+
+```{r echo=T, fig.height=4, fig.width=6, fig.align='center', message = F, warning = F}
+library(ggplot2)
+
+ggplot(datos, aes(x = hwy)) + geom_histogram()
+```
+
+```{r echo=T, fig.height=4, fig.width=3}
+ggplot(datos, aes(y = hwy)) + geom_boxplot()
+```
+
+En ambos gráficos podemos ver que entre los datos de los percentiles superiores en efecto hay dos o tres valores que parecieran atípicos. En los datos de los percentiles podría haber uno, que no aparece en el boxplot. La técnica que se utiliza en la implementación de R de boxplot, para decidir cuándo un valor es atípico es el rango intercuartil (IQR):
+
+$$I = [q_{0.25} + 1.5 \times IQR; q_{0.75} + 1.5 \times IQR ]$$
+
+donde $IQR = q_{0.75} - q_{0.25}$, y $q$ es el cuantil que se indica con el subíndice. Estos valores podemos extraerlos con la funcion `boxplot` de `graphics`:
+
+```{r echo = T}
+atipicos <- boxplot.stats(datos$hwy)$out
+atipicos
+```
+
+Y utilizando estos valores podemos identificar las unidades obsercavionales *sospechosas*:
+
+```{r}
+id.atip <- which(datos$hwy %in% atipicos)
+
+knitr::kable(datos[id.atip, ])
+```
+
+Estos procedimientos adolecen de lo mismo que los análisis exploratorios, no son *objetivos* y carecen de formalidad. Las siguientes pruebas estadísticas están diseñadas para identificar datos atípicos de la manera más robusta posible:
+
+- Grubbs
+- Dixon
+- Rubner
+
+y todas están implementadas en el paquete `outliers`.
