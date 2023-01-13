@@ -183,3 +183,7 @@ Dado que $P \gg 0.05$ también podemos aceptar la hipótesis nula.
 ## ¿Qué hacer con los datos atípicos?
 
 Hemos visto algunas técnicas para identificar datos atípicos, y en caso de estar presentes, debemos tomar decisiones sobre qué hacer con ellos. Lo primero que deberíamos hacer es identificar la razón por la cual esos datos son anómalos, lo que nos ayudará a tomar medidas correctivas. Por ejemplo, si las razones de su presencia es impericia de quien opera un equipo o falla del equipo, sería difícil encontrar un valor sensato para sustituir. Otra de las razones que no se listan arriba es el uso de escalas diferentes (°K en lugar de °C, p. ej.), lo que resulta fácil de corregir mediante las reglas de conversión.
+
+[Codigo fuente de este tutorial](Faltantes-atipicos.Rmd)
+
+[Regresar al índice del curso](index.html)
