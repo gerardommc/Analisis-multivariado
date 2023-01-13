@@ -166,4 +166,20 @@ Estos procedimientos adolecen de lo mismo que los análisis exploratorios, no so
 - Dixon
 - Rubner
 
-y todas están implementadas en el paquete `outliers`.
+y todas están implementadas en el paquete `outliers`. Estas pruebas estadísticas buscan deseachar por medio de probabilidad, la hipótesis nula ($H_0$) de que "No hay datos atípicos". Veamos un ejemplo para valores en la parte izquiera de la curva de distribución:
+
+```{r echo = T}
+outliers::grubbs.test(datos$hwy, opposite = FALSE)
+```
+
+En el resultado de la prueba de Grubbs debemos fijarnos en el valor estimado de *P*, si este es $P > 0.05$, aceptamos $H_0$. Por lo tanto inferimos que el valor del dato 44 no es atípico. La misma hipótesis pero para los valores más pequeños que la media la podemos probar cambiando el argumento `opposite`:
+
+```{r echo = T}
+outliers::grubbs.test(datos$hwy, opposite = TRUE)
+```
+
+Dado que $P \gg 0.05$ también podemos aceptar la hipótesis nula.
+
+## ¿Qué hacer con los datos atípicos?
+
+Hemos visto algunas técnicas para identificar datos atípicos, y en caso de estar presentes, debemos tomar decisiones sobre qué hacer con ellos. Lo primero que deberíamos hacer es identificar la razón por la cual esos datos son anómalos, lo que nos ayudará a tomar medidas correctivas. Por ejemplo, si las razones de su presencia es impericia de quien opera un equipo o falla del equipo, sería difícil encontrar un valor sensato para sustituir. Otra de las razones que no se listan arriba es el uso de escalas diferentes (°K en lugar de °C, p. ej.), lo que resulta fácil de corregir mediante las reglas de conversión.
